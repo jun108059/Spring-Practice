@@ -3,15 +3,15 @@ package com.saramin.communication;
 import com.saramin.communication.member.Grade;
 import com.saramin.communication.member.Member;
 import com.saramin.communication.member.MemberService;
-import com.saramin.communication.member.MemberServiceImpl;
 import com.saramin.communication.order.Order;
 import com.saramin.communication.order.OrderService;
-import com.saramin.communication.order.OrderServiceImpl;
 
 public class OrderApp {
     public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
-        OrderService orderService = new OrderServiceImpl();
+        AppConfig appConfig = new AppConfig();
+
+        MemberService memberService = appConfig.memberService();
+        OrderService orderService = appConfig.orderService();
 
         Long memberId = 1L;
         Member member = new Member(memberId, "itemA", Grade.VIP);
