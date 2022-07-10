@@ -1,8 +1,8 @@
-package practice.basic.service.dto;
+package practice.basic.service;
 
-import org.junit.Test;
-import static org.assertj.core.api.Assertions.assertThat;
-
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import practice.basic.service.dto.HelloResponseDto;
 
 public class HelloResponseDtoTest {
 
@@ -16,8 +16,7 @@ public class HelloResponseDtoTest {
         HelloResponseDto dto = new HelloResponseDto(name, amount);
 
         // then
-        assertThat(dto.getName()).isEqualTo(name);
-        assertThat(dto.getAmount()).isEqualTo(amount);
-
+        Assertions.assertEquals(name, dto.getName());
+        Assertions.assertEquals(amount, dto.getAmount());
     }
 }

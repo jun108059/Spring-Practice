@@ -1,5 +1,6 @@
 package practice.basic;
 
+import org.junit.jupiter.api.Assertions;
 import practice.basic.member.MemberRepository;
 import practice.basic.member.MemoryMemberRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ApplicationContextSameBeanFindTest {
@@ -29,7 +29,7 @@ public class ApplicationContextSameBeanFindTest {
     @DisplayName("타입으로 조회 시 같은 타입이 둘 이상 있으면, 빈 이름을 지정하면 된다.")
     void findBeanByName() {
         MemberRepository memberRepository = ac.getBean("memberRepository1", MemberRepository.class);
-        assertThat(memberRepository).isInstanceOf(MemberRepository.class);
+        Assertions.assertTrue(memberRepository instanceof MemberRepository);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ApplicationContextSameBeanFindTest {
             System.out.println("key = " + key + "value = " + beansOfType.get(key));
         }
         System.out.println("beansOfType = " + beansOfType);
-        assertThat(beansOfType.size()).isEqualTo(2);
+        Assertions.assertEquals(2, beansOfType.size());
     }
 
     /**

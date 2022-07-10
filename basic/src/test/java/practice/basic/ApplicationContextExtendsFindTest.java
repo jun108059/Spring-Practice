@@ -1,5 +1,6 @@
 package practice.basic;
 
+import org.junit.jupiter.api.Assertions;
 import practice.basic.discount.DiscountPolicy;
 import practice.basic.discount.FixDiscountPolicy;
 import practice.basic.discount.RateDiscountPolicy;
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ApplicationContextExtendsFindTest {
@@ -32,21 +32,21 @@ class ApplicationContextExtendsFindTest {
     void findBeanByParentTypeBeanName() {
         DiscountPolicy rateDiscountPolicy = ac.getBean("rateDiscountPolicy",
                 DiscountPolicy.class);
-        assertThat(rateDiscountPolicy).isInstanceOf(RateDiscountPolicy.class);
+        Assertions.assertTrue(rateDiscountPolicy instanceof RateDiscountPolicy);
     }
 
     @Test
     @DisplayName("특정 하위 타입으로 조회")
     void findBeanBySubType() {
         RateDiscountPolicy bean = ac.getBean(RateDiscountPolicy.class);
-        assertThat(bean).isInstanceOf(RateDiscountPolicy.class);
+        Assertions.assertTrue(bean instanceof RateDiscountPolicy);
     }
 
     @Test
     @DisplayName("부모 타입으로 모두 조회하기")
     void findAllBeanByParentType() {
         Map<String, DiscountPolicy> beansOfType = ac.getBeansOfType(DiscountPolicy.class);
-        assertThat(beansOfType.size()).isEqualTo(2);
+        Assertions.assertEquals(2, beansOfType.size());
         for (String key : beansOfType.keySet()) {
             System.out.println("key = " + key + " value=" + beansOfType.get(key));
         }

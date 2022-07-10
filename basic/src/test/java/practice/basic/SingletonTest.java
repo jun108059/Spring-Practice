@@ -1,12 +1,11 @@
 package practice.basic;
 
+import org.junit.jupiter.api.Assertions;
 import practice.basic.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import static org.assertj.core.api.Assertions.*;
 
 public class SingletonTest {
     @Test
@@ -21,7 +20,7 @@ public class SingletonTest {
         System.out.println("memberService1 = " + memberService1);
         System.out.println("memberService2 = " + memberService2);
         //memberService1 != memberService2
-        assertThat(memberService1).isNotSameAs(memberService2);
+        Assertions.assertNotEquals(memberService1, memberService2);
     }
 
     @Test
@@ -38,7 +37,6 @@ public class SingletonTest {
         System.out.println("singletonService1 = " + singletonService1);
         System.out.println("singletonService2 = " + singletonService2);
         // singletonService1 == singletonService2
-        assertThat(singletonService1).isSameAs(singletonService2);
         singletonService1.logic();
     }
 
@@ -54,7 +52,7 @@ public class SingletonTest {
         System.out.println("memberService1 = " + memberService1);
         System.out.println("memberService2 = " + memberService2);
         // memberService1 == memberService2
-        assertThat(memberService1).isSameAs(memberService2);
+        Assertions.assertEquals(memberService1, memberService2);
     }
 
 }

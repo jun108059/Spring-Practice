@@ -1,8 +1,8 @@
 package practice.basic.discount;
 
+import org.junit.jupiter.api.Assertions;
 import practice.basic.member.Grade;
 import practice.basic.member.Member;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ class RateDiscountPolicyTest {
         int discount = discountPolicy.discount(member, 10000);
 
         // then
-        Assertions.assertThat(discount).isEqualTo(1000);
+        Assertions.assertEquals(1000, discount);
     }
 
     @Test
@@ -33,6 +33,6 @@ class RateDiscountPolicyTest {
         int discount = discountPolicy.discount(member, 10000);
 
         // then
-        Assertions.assertThat(discount).isEqualTo(0);
+        Assertions.assertEquals(0, discount);
     }
 }

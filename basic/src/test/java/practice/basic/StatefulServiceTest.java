@@ -1,6 +1,6 @@
 package practice.basic;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -19,7 +19,8 @@ class StatefulServiceTest {
         //ThreadA: 사용자 A 주문 금액 조회
         System.out.println("price = " + userAPrice);
         //ThreadA: 사용자 A 는 10000원
-        Assertions.assertThat(userAPrice).isEqualTo(10000);
+        Assertions.assertEquals(10000, userAPrice);
+
     }
 
     static class TestConfig {

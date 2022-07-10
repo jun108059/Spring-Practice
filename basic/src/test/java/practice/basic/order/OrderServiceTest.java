@@ -1,16 +1,15 @@
 package practice.basic.order;
 
+import org.junit.jupiter.api.Assertions;
 import practice.basic.AppConfig;
 import practice.basic.member.Grade;
 import practice.basic.member.Member;
 import practice.basic.member.MemberService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class OrderServiceTest {
 
-    AppConfig appConfig = new AppConfig();
     MemberService memberService;
     OrderService orderService;
 
@@ -32,6 +31,6 @@ class OrderServiceTest {
         memberService.join(member);
 
         Order order = orderService.createOrder(memberId, "itemA", 10000);
-        Assertions.assertThat(order.getDiscount()).isEqualTo(1000);
+        Assertions.assertEquals(1000, order.getDiscount());
     }
 }
