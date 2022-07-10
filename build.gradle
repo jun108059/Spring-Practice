@@ -1,40 +1,70 @@
-plugins {
-    id 'org.springframework.boot' version '2.4.5'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-}
-
-group = 'com.saramin'
-version = '1.0'
-sourceCompatibility = '11'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+buildscript {
+    ext {
+        springBootVersion = '2.7.0'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
     }
 }
 
-repositories {
-    mavenCentral()
-}
+allprojects {}
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+// 하위 모든 프로젝트 공통 세팅
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-    runtimeOnly 'com.h2database:h2'
+    group 'practice'
+    version '1.0'
 
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    //JUnit4 추가
-    testImplementation("org.junit.vintage:junit-vintage-engine") {
-        exclude group: "org.hamcrest", module: "hamcrest-core"
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    // 하위 모듈에서 공통으로 사용하는 세팅 추가
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+
+        annotationProcessor 'org.projectlombok:lombok'
+        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
-test {
-    useJUnitPlatform()
+project(':basic') {
+    bootJar { enabled = true }
+    jar { enabled = false }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
+        implementation 'mysql:mysql-connector-java:8.0.29'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+    }
+}
+
+project(':mvc1') {
+    bootJar { enabled = true }
+    jar { enabled = false }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
+        implementation 'mysql:mysql-connector-java:8.0.29'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+    }
 }
