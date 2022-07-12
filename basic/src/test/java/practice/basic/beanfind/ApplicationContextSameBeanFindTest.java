@@ -1,4 +1,4 @@
-package practice.basic;
+package practice.basic.beanfind;
 
 import org.junit.jupiter.api.Assertions;
 import practice.basic.member.MemberRepository;

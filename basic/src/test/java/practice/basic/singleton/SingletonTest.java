@@ -1,6 +1,7 @@
-package practice.basic;
+package practice.basic.singleton;
 
 import org.junit.jupiter.api.Assertions;
+import practice.basic.AppConfig;
 import practice.basic.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

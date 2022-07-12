@@ -1,4 +1,4 @@
-package practice.basic;
+package practice.basic.singleton;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,7 @@
-package practice.basic;
+package practice.basic.beanfind;
 
 import org.junit.jupiter.api.Assertions;
+import practice.basic.AppConfig;
 import practice.basic.member.MemberService;
 import practice.basic.member.MemberServiceImpl;
 import org.junit.jupiter.api.DisplayName;

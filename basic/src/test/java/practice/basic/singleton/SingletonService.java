@@ -1,4 +1,4 @@
-package practice.basic;
+package practice.basic.singleton;
 
 public class SingletonService {
 
