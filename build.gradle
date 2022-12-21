@@ -68,3 +68,12 @@ project(':mvc1') {
         implementation 'org.springframework.boot:spring-boot-starter-validation'
     }
 }
+
+project(':mvc2') {
+    bootJar { enabled = true }
+    jar { enabled = false }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+    }
+}
