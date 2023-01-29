@@ -77,3 +77,13 @@ project(':mvc2') {
         implementation 'org.springframework.boot:spring-boot-starter-validation'
     }
 }
+
+project(':querydsl') {
+    bootJar { enabled = true }
+    jar { enabled = false }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
+        runtimeOnly 'mysql:mysql-connector-java'
+    }
+}
