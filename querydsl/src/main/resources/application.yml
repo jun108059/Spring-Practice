@@ -17,8 +17,11 @@ spring:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: update
-    properties:
+      ddl-auto: create
+
+logging:
+  level:
+    org:
       hibernate:
-        show_sql: true
-        format_sql: true
+        sql: debug
+        type: trace
