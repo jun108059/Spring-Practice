@@ -11,6 +11,8 @@ import practice.querydsl.entity.*;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static practice.querydsl.entity.QMember.*;
 
@@ -78,4 +80,13 @@ class QuerydslBasicTest {
 		assertEquals(findMember.getUsername(), "member1");
 	}
 
+	@Test
+	public void searchAndParam() {
+		List<Member> result1 = queryFactory
+				.selectFrom(member)
+				.where(member.username.eq("member1"),
+						member.age.eq(10))
+				.fetch();
+		assertEquals(result1.size(), 1);
+	}
 }
