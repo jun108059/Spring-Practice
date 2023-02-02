@@ -1,7 +1,6 @@
 package practice.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import practice.querydsl.entity.*;
 
 import javax.persistence.EntityManager;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static practice.querydsl.entity.QMember.*;
 
 @SpringBootTest
@@ -52,7 +52,7 @@ class QuerydslBasicTest {
 				.setParameter("username", "member1")
 				.getSingleResult();
 
-		Assertions.assertEquals(findMember.getUsername(), "member1");
+		assertEquals(findMember.getUsername(), "member1");
 
 	}
 
@@ -65,6 +65,17 @@ class QuerydslBasicTest {
 				.where(member.username.eq("member1"))
 				.fetchOne();
 
-		Assertions.assertEquals(findMember.getUsername(), "member1");
+		assertEquals(findMember.getUsername(), "member1");
 	}
+
+	@Test
+	public void search() {
+		Member findMember = queryFactory
+				.selectFrom(member)
+				.where(member.username.eq("member1")
+						.and(member.age.eq(10)))
+				.fetchOne();
+		assertEquals(findMember.getUsername(), "member1");
+	}
+
 }
