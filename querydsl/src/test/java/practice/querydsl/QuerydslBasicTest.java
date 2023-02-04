@@ -115,4 +115,15 @@ class QuerydslBasicTest {
         assertNull(memberNull.getUsername());
     }
 
+    @Test
+    public void paging1() {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .orderBy(member.username.desc())
+                .offset(1) // 0부터 시작(zero index)
+                .limit(2) // 최대 2건 조회
+                .fetch();
+        assertEquals(result.size(), 2);
+    }
+
 }
