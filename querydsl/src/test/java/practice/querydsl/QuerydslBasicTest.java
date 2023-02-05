@@ -1,5 +1,6 @@
 package practice.querydsl;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -124,6 +125,51 @@ class QuerydslBasicTest {
                 .limit(2) // 최대 2건 조회
                 .fetch();
         assertEquals(result.size(), 2);
+    }
+
+    @Test
+    public void paging2() {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .orderBy(member.username.desc())
+                .offset(1)
+                .limit(2)
+                .fetch();
+
+        Long totalCount = queryFactory
+                .select(member.count())
+                .from(member)
+                .fetchOne();
+
+        assertEquals(result.size(), 2);
+        assertEquals(totalCount, 4);
+    }
+
+    /**
+     * JPQL
+     * select
+     * COUNT(m), // 회원 수
+     * SUM(m.age), // 나이 합
+     * AVG(m.age), // 평균 나이
+     * MAX(m.age), // 최대 나이
+     * MIN(m.age) // 최소 나이
+     */
+    @Test
+    public void aggregation() {
+        List<Tuple> result = queryFactory
+                .select(member.count(),
+                        member.age.sum(),
+                        member.age.avg(),
+                        member.age.max(),
+                        member.age.min())
+                .from(member)
+                .fetch();
+        Tuple tuple = result.get(0);
+        assertEquals(tuple.get(member.count()), 4);
+        assertEquals(tuple.get(member.age.sum()), 100);
+        assertEquals(tuple.get(member.age.avg()), 25);
+        assertEquals(tuple.get(member.age.max()), 40);
+        assertEquals(tuple.get(member.age.min()), 10);
     }
 
 }
