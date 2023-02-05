@@ -2,6 +2,7 @@ package practice.querydsl;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import practice.querydsl.entity.Member;
+import practice.querydsl.entity.QMember;
+import practice.querydsl.entity.QTeam;
 import practice.querydsl.entity.Team;
 
 import javax.persistence.EntityManager;
@@ -17,6 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static practice.querydsl.entity.QMember.member;
+import static practice.querydsl.entity.QTeam.team;
 
 @SpringBootTest
 @Transactional
@@ -170,6 +174,42 @@ class QuerydslBasicTest {
         assertEquals(tuple.get(member.age.avg()), 25);
         assertEquals(tuple.get(member.age.max()), 40);
         assertEquals(tuple.get(member.age.min()), 10);
+    }
+
+    /**
+     * 팀의 이름과 각 팀의 평균 연령을 구하라
+     */
+    @Test
+    public void group() {
+        List<Tuple> result = queryFactory
+                .select(team.name, member.age.avg())
+                .from(member)
+                .join(member.team, team)
+                .groupBy(team.name)
+                .fetch();
+        Tuple teamA = result.get(0);
+        Tuple teamB = result.get(1);
+        assertEquals(teamA.get(team.name), "teamA");
+        assertEquals(teamA.get(member.age.avg()), 15);
+        assertEquals(teamB.get(team.name), "teamB");
+        assertEquals(teamB.get(member.age.avg()), 35);
+    }
+
+    /**
+     * 팀A에 소속된 모든 회원
+     */
+    @Test
+    public void join() {
+        QMember member = QMember.member;
+        QTeam team = QTeam.team;
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .join(member.team, team)
+                .where(team.name.eq("teamA"))
+                .fetch();
+        Assertions.assertThat(result)
+                .extracting("username")
+                .containsExactly("member1", "member2");
     }
 
 }
