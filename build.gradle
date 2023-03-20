@@ -94,6 +94,8 @@ project(':spring-in-action') {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework:spring-webflux'
+        implementation 'org.springframework.data:spring-data-commons'
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
